@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Antonio's Gallery</title>
+		<meta name="description" content="Responsive Image Gallery">
+		<meta name="template" content="Tim Wells">
+
+		<style type="text/css">
+
+		.topnav {
+		  background-color: rgba(210,218,226,0.5);
+		  overflow: visible;
+		  <!--filter: drop-shadow(0px 16px 0px rgba(75,207,250,0.75));-->
+		  z-index: 0;
+		  position: fixed;
+		  top: 0;
+		  width: 100%;
+		}
+
+		.topnav:before,
+		.topnav:after {
+		  content: "";
+		  position: absolute;
+		  z-index: -1;
+		  bottom: 25px;
+		  left: -20px;
+		  width: 100%;
+		  height: 20%;
+		  box-shadow: 20px 30px 20px rgba(210,218,226,0.95);
+		}
+
+
+
+		.topnav a {
+		  float: left;
+		  color: #1e272e;
+		  text-align: center;
+		  padding: 14px 16px;
+		  text-decoration: none;
+		  font-size: 17px;
+		  font-family: Poppins, Helvetica, sans-serif;
+		}
+
+
+		.topnav a:hover {
+		  background-color: #ddd;
+		  color: black;
+		}
+
+
+		.topnav a.active {
+		  background-color: #1e272e;
+		  color: white;
+		}
+
+		#darkbox { width:1280px; height:720px; position:absolute;
+			top:0; left:0; background-color:#F8F9F9; overflow: hidden; text-align:center;
+		}
+		.darkboximg { padding:5%; max-width: 1216px; max-height: 684px; }
+
+		#gallery {
+			line-height:0;
+			-webkit-column-count:5;
+			-webkit-column-gap:5px;
+			-moz-column-count:5;
+			-moz-column-gap:5px;
+			column-count:5;
+			column-gap:5px;
+			margin-top:4rem;
+		}
+
+		#gallery img {
+			width: 100% !important;
+			height: auto !important;
+			margin-bottom:5px;
+			filter: grayscale(100%);
+			transition: filter 3s;
+		}
+
+		#gallery img:hover {
+			filter:none;
+		}
+
+		@media (max-width: 1200px) {
+			#gallery {
+				-moz-column-count:    4;
+				-webkit-column-count: 4;
+				column-count:         4;
+			}
+		}
+		@media (max-width: 1000px) {
+			#gallery {
+				-moz-column-count:    3;
+				-webkit-column-count: 3;
+				column-count:         3;
+			}
+		}
+		@media (max-width: 800px) {
+			#gallery {
+				-moz-column-count:    2;
+				-webkit-column-count: 2;
+				column-count:         2;
+			}
+		}
+		@media (max-width: 400px) {
+			#gallery {
+				-moz-column-count:    1;
+				-webkit-column-count: 1;
+				column-count:         1;
+			}
+		}
+
+		</style>
+	</head>
+	<body>
+
+		<div id="gallery">
+
+			<img src="gallery/1.jpg">
+			<img src="gallery/2.jpg">
+			<img src="gallery/3.jpg">
+			<img src="gallery/4.jpg">
+			<img src="gallery/5.jpg">
+			<img src="gallery/6.jpg">
+			<img src="gallery/7.jpg">
+			
+
+		</div>
+
+<div class="topnav">
+		  <a class="active" href="#home">Home</a>
+		  <a href="#news">News</a>
+		  <a href="#contact">Contact</a>
+		  <a href="#about">About</a>
+		</div>
+
+
+		<script>
+		let darkBoxVisible = false;
+
+		window.addEventListener('load', (event) => {
+			let images = document.querySelectorAll("img");
+			if(images !== null && images !== undefined && images.length > 0) {
+				images.forEach(function(img) {
+					img.addEventListener('click', (evt) => {
+						showDarkbox(img.src);
+					});
+				});
+			}
+		});
+
+		function showDarkbox(url) {
+			if(!darkBoxVisible) {
+				let x = (window.innerWidth - 1280) / 2;
+				let y = window.scrollY + 50;
+
+				// Create the darkBox
+				var div = document.createElement("div");
+				div.id = "darkbox";
+				div.innerHTML = '<img class="darkboximg" src="'+url+'" />';
+				document.body.appendChild(div);
+				let box = document.getElementById("darkbox");
+				box.style.left = x.toString()+"px";
+				box.style.top = y.toString()+"px";
+				box.style.height = 'auto';
+				box.addEventListener('click', (event) => {
+					// Remove it
+					let element = document.getElementById("darkbox");
+					element.parentNode.removeChild(element);
+
+					darkBoxVisible = false;
+				})
+
+				darkBoxVisible = true;
+
+			} else {
+				// Remove it
+				let element = document.getElementById("darkbox");
+				element.parentNode.removeChild(element);
+
+				darkBoxVisible = false;
+			}
+		}
+		</script>
+
+	</body>
+</html>
