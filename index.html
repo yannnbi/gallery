@@ -47,8 +47,6 @@
 		  box-shadow: 20px 30px 20px rgba(210,218,226,0.75);
 		}
 
-
-
 		.topnav a {
 		  float: left;
 		  color: #1e272e;
@@ -128,22 +126,33 @@
 			}
 		}
 		.about{
-			position: relative;
 			margin:0px;
   			width:100%;
 			padding: 0px;
 			background-color: #343434;
 			font-family: Poppins, Helvetica, sans-serif;
 			color: #ecf0f1;
+			flex-grow: 1; /* make it stretch to the bottom even if little content */
+			overflow-y: scroll; /* optional */
+			overflow-x: visible;
+			word-wrap: break-word;
+			box-sizing: border-box;
+			padding: 50px;
 		}
 		.tab {
     		display: inline-block;
     		margin-left: 4em;
 		}
-		div.a{
-			word-wrap: break-word;
-			box-sizing: border-box;
-			padding: 50px;
+
+		html, body {
+		  margin: 0;
+		  padding: 0;
+		  height: 100%;
+		}
+
+		body {
+  		display: flex; /* or css grid for more intricate layouts */
+  		flex-direction: column;
 		}
 
 		</style>
@@ -226,7 +235,6 @@
 		}
 		</script>
 		<div id="about-section" class="about">
-			<div class="a">
 			<h1>
 				I'm Antonio,
 			</h1>
@@ -240,7 +248,6 @@
 			<br>
 				<span class="tab"></span>Contact Information: <br>
 				<span class="tab"></span>email: <a href="mailto:antoniobi04@outlook.com">antoniobi04@outlook.com</a>
-			</div>
 		</div>
 
 	</body>
