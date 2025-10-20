@@ -230,7 +230,7 @@ flex-direction: column;
   .this-is-what-i-look-like {
     position: relative;
     display: block;
-    margin: -20 auto 20px auto;
+    margin: 20px auto 20px -5px;
     height: auto;
     width: 100%;
     max-width: 400px;
