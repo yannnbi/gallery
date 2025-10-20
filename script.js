@@ -1,83 +1,38 @@
-
-// const btn = document.getElementById('triggerBtn');
 const shapes = document.querySelectorAll('.transition-shape');
 const links = document.querySelectorAll('.transition-link');
 
-// btn.addEventListener('click', (e) => {
-//   // Get button's position relative to viewport
-//   const rect = e.target.getBoundingClientRect();
-//   const x = rect.left + rect.width / 2;
-//   const y = rect.top + rect.height / 2;
-
-//   // Pick a random shape
-//   const shape = shapes[Math.floor(Math.random() * shapes.length)];
-
-//   // Position the shape at the button's center
-//   shape.style.left = `${x - 100}px`; // assuming shape is 200x200
-//   shape.style.top = `${y - 100}px`;
-
-//   // Reset and animate
-//   shape.classList.remove('animate');
-//   shape.offsetHeight; // force reflow
-//   shape.classList.add('animate');
-
-//   // Cleanup after animation
-//   shape.addEventListener('animationend', () => {
-//     shape.classList.remove('animate');
-//     shape.style.display = 'none';
-//   }, { once: true });
-
-//   shape.style.display = 'block';
-// });
-
-
-
-
 links.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault(); // Stop link navigation for now
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const href = link.href;
 
-        const href = link.getAttribute('href'); // Save target URL
+        // Start preloading the next page
+        const preload = fetch(href, { method: 'GET', mode: 'no-cors' }).catch(() => {});
 
-        // Get link position
+        // Pick a random shape
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+
+        // Position at link center
         const rect = link.getBoundingClientRect();
-        const x = rect.left + rect.width / 2;
-        const y = rect.top + rect.height / 2;
+        shape.style.left = `${rect.left + rect.width / 2 - 100}px`;
+        shape.style.top = `${rect.top + rect.height / 2 - 100}px`;
 
-        // Pick random shape
-            const shape = shapes[Math.floor(Math.random() * shapes.length)];
-
-        // Position the shape at the button's center
-        shape.style.left = `${x - 100}px`; // assuming shape is 200x200
-        shape.style.top = `${y - 100}px`;
-
-        // Reset and animate
-        shape.classList.remove('animate');
-        shape.offsetHeight; // force reflow
-        shape.classList.add('animate');
-
-        // Cleanup after animation
-        shape.addEventListener('animationend', () => {
-        shape.classList.remove('animate');
-        shape.style.display = 'none';
-        }, { once: true });
-
+        // Reset and start animation
         shape.style.display = 'block';
+        shape.classList.remove('animate');
+        requestAnimationFrame(() => shape.classList.add('animate'));
 
-        //After animation ends, go to new page
+        // Navigate after animation ends
         shape.addEventListener('animationend', () => {
-        window.location.href = href;
+            window.location.href = href; // go to next page
         }, { once: true });
     });
 });
 
 
+// Loading screen fade-out
 window.addEventListener('load', () => {
-  const loader = document.getElementById('loading-screen');
-  loader.classList.add('fade-out');
-  
-  // Optional: remove from DOM after fade-out
-  setTimeout(() => {
-    loader.remove();
-  }, 500); // match CSS transition duration
+    const loader = document.getElementById('loading-screen');
+    loader.classList.add('fade-out');
+    setTimeout(() => loader.remove(), 500);
 });
